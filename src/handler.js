@@ -149,3 +149,22 @@ export const updateBookHandler = (request, h) => {
     message: "Buku berhasil diperbarui",
   });
 };
+
+export const destroyBookHandler = (request, h) => {
+  const { bookId } = request.params;
+  const book = books.findIndex((book) => book.id == bookId);
+
+  if (book == -1) {
+    return h.response({
+      status: "fail",
+      message: "Buku gagal dihapus. Id buku tidak ditemukan",
+    });
+  }
+
+  books.splice(book, 1);
+
+  return h.response({
+    status: "success",
+    message: "Buku berhasil dihapus",
+  });
+};
