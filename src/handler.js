@@ -8,10 +8,31 @@ export const homeHandler = (request, h) => {
 };
 
 export const listBooksHandler = (request, h) => {
+  const { name, finished, reading } = request.query;
+  let dataBooks = books;
+
+  if (name) {
+    dataBooks = books.filter((book) =>
+      book.name.toLowerCase().includes(name.toLowerCase())
+    );
+  }
+
+  if (finished) {
+    dataBooks = books.filter((book) => book.finished == finished);
+  }
+
+  if (reading) {
+    dataBooks = books.filter((book) => Number(book.reading) == Number(reading));
+  }
+
   return h.response({
     status: "success",
     data: {
-      books: books,
+      books: dataBooks.map((book) => ({
+        id: book.id,
+        name: book.name,
+        publisher: book.publisher,
+      })),
     },
   });
 };
