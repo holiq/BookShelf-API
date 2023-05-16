@@ -4,7 +4,7 @@ import books from "./books.js";
 export const homeHandler = (request, h) => {
   return h.response({
     name: "BookShelf API",
-  });
+  }).code(200);
 };
 
 export const listBooksHandler = (request, h) => {
@@ -34,7 +34,7 @@ export const listBooksHandler = (request, h) => {
         publisher: book.publisher,
       })),
     },
-  });
+  }).code(200);
 };
 
 export const storeBookHandler = (request, h) => {
@@ -52,10 +52,11 @@ export const storeBookHandler = (request, h) => {
   const insertedAt = new Date().toISOString();
   const updatedAt = insertedAt;
   const finished = pageCount === readPage ? true : false;
+
   if (!name) {
     return h.response({
       status: "fail",
-      message: "Gagagl menambahkan buku. Mohon isi nama buku",
+      message: "Gagal menambahkan buku. Mohon isi nama buku",
     }).code(400);
   }
 
@@ -63,7 +64,7 @@ export const storeBookHandler = (request, h) => {
     return h.response({
       status: "fail",
       message:
-        "Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount ",
+        "Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount",
     }).code(400);
   }
 
@@ -101,7 +102,7 @@ export const findBookHandler = (request, h) => {
   if (!book) {
     return h.response({
       status: "fail",
-      message: "Buku tak ditemukan",
+      message: "Buku tidak ditemukan",
     }).code(404);
   }
 
@@ -132,7 +133,7 @@ export const updateBookHandler = (request, h) => {
   if (!name) {
     return h.response({
       status: "fail",
-      message: "Gagagl memperbarui buku. Mohon isi nama buku",
+      message: "Gagal memperbarui buku. Mohon isi nama buku",
     }).code(400);
   }
 
@@ -140,7 +141,7 @@ export const updateBookHandler = (request, h) => {
     return h.response({
       status: "fail",
       message:
-        "Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount ",
+        "Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount",
     }).code(400);
   }
 
@@ -148,7 +149,7 @@ export const updateBookHandler = (request, h) => {
     return h.response({
       status: "fail",
       message: "Gagal memperbarui buku. Id tidak ditemukan",
-    });
+    }).code(404);
   }
 
   books[book] = {
@@ -168,7 +169,7 @@ export const updateBookHandler = (request, h) => {
   return h.response({
     status: "success",
     message: "Buku berhasil diperbarui",
-  });
+  }).code(200);
 };
 
 export const destroyBookHandler = (request, h) => {
@@ -178,8 +179,8 @@ export const destroyBookHandler = (request, h) => {
   if (book == -1) {
     return h.response({
       status: "fail",
-      message: "Buku gagal dihapus. Id buku tidak ditemukan",
-    });
+      message: "Buku gagal dihapus. Id tidak ditemukan",
+    }).cod (404);
   }
 
   books.splice(book, 1);
@@ -187,5 +188,5 @@ export const destroyBookHandler = (request, h) => {
   return h.response({
     status: "success",
     message: "Buku berhasil dihapus",
-  });
+  }).code(200);
 };
